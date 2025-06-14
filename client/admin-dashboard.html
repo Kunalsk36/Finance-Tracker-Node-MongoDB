@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body class="flex bg-gray-100 min-h-screen">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-blue-800 text-white flex-shrink-0 fixed h-full top-0 left-0 shadow-lg z-50">
+    <div class="p-6 text-2xl font-bold border-b border-blue-700">Admin Panel</div>
+    <nav class="flex-1">
+      <ul class="space-y-4 px-6">
+        <li><a href="#stats" class="hover:text-yellow-300 block pt-4">Dashboard</a></li>
+        <li><a href="#users" class="hover:text-yellow-300 block">Users</a></li>
+        <li><a href="#contacts" class="hover:text-yellow-300 block">Contact Submissions</a></li>
+        <li><a href="#new-admin" class="hover:text-yellow-300 block">Add Admin</a></li>
+        <li id="adminLogout" class="hover:text-yellow-300 block cursor-pointer">Logout</li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div class="flex-1 ml-64 flex flex-col">
+    
+    <!-- Top Bar -->
+    <header class="bg-blue-600 text-white py-6 px-6 shadow text-center text-2xl font-bold">
+      Finance Tracker
+    </header>
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-8 overflow-auto">
+
+    <!-- Stats Section -->
+    <section id="stats" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+      <div class="bg-white p-6 rounded-lg shadow text-center">
+        <h3 class="text-lg font-semibold">Total Users</h3>
+        <p id="totalUsersCount" class="text-3xl text-blue-700 mt-2">0</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow text-center">
+        <h3 class="text-lg font-semibold">Contact Submissions</h3>
+        <p id="totalSubmissions" class="text-3xl text-blue-700 mt-2">0</p>
+      </div>
+    </section>
+
+    <!-- Users Table -->
+    <section id="users" class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold mb-4">User List</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full table-auto text-sm">
+          <thead class="bg-blue-700 text-white">
+            <tr>
+              <th class="px-4 py-2 text-left">Sr. No.</th>
+              <th class="px-4 py-2 text-left">Name</th>
+              <th class="px-4 py-2 text-left">Email</th>
+            </tr>
+          </thead>
+          <tbody id="userTableBody" class="divide-y"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Contact Submissions -->
+    <section id="contacts" class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold mb-4">Contact Form Submissions</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full table-auto text-sm">
+          <thead class="bg-blue-700 text-white">
+            <tr>
+              <th class="px-4 py-2 text-left">Sr. No.</th>
+              <th class="px-4 py-2 text-left">Name</th>
+              <th class="px-4 py-2 text-left">Email</th>
+              <th class="px-4 py-2 text-left">Message</th>
+            </tr>
+          </thead>
+          <tbody id="contactTableBody" class="divide-y"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Add New Admin -->
+    <section id="new-admin" class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold mb-4">Add New Admin</h2>
+      <form id="addAdminForm" class="space-y-4">
+        <div>
+          <label class="block font-medium">Username</label>
+          <input type="text" id="newAdminUsername" name="username" required class="w-full p-2 border rounded" />
+        </div>
+        <div>
+          <label class="block font-medium">Password</label>
+          <input type="password" id="newAdminPassword" name="password" required class="w-full p-2 border rounded" />
+        </div>
+        <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800">Add Admin</button>
+      </form>
+    </section>
+
+  </main>
+  </div>
+
+  <script src="js/admin-dashboard.js"></script>
+</body>
+</html>

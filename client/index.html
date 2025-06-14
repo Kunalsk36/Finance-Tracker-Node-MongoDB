@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard - Finance Tracker</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <script
+      src="https://kit.fontawesome.com/8665390de3.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- jsPDF AutoTable Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- SheetJS (XLSX) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <nav class="bg-blue-600 p-4 text-white flex justify-between items-center">
+  <h1 class="text-xl font-semibold">Finance Tracker</h1>
+
+  <div class="flex items-center space-x-3">
+    <!-- Chart Buttons -->
+    <a
+      href="#pieSection"
+      class="bg-blue-900 px-3 py-1 rounded hover:bg-gray-700 transition text-white"
+    >
+      Pie Chart
+    </a>
+    <a
+      href="#barSection"
+      class="bg-blue-900 px-3 py-1 rounded hover:bg-gray-700 transition text-white"
+    >
+      Bar Chart
+    </a>
+
+    <!-- Export Dropdown -->
+    <div class="relative">
+      <button
+        id="exportBtn"
+        class="bg-blue-900 px-3 py-1 rounded hover:bg-gray-700 transition text-white"
+      >
+        Export ▼
+      </button>
+      <div
+        id="exportMenu"
+        class="hidden absolute right-0 mt-2 w-40 bg-blue-800 rounded shadow-lg z-10"
+      >
+        <button
+          class="block w-full text-left px-4 py-2 hover:bg-gray-400 hover:text-black"
+          onclick="exportToPDF()"
+        >
+          Export to PDF
+        </button>
+        <button
+          class="block w-full text-left px-4 py-2 hover:bg-gray-400 hover:text-black"
+          onclick="exportToExcel()"
+        >
+          Export to Excel
+        </button>
+      </div>
+    </div>
+
+    <!-- Logout Button -->
+    <button
+      id="logoutBtn"
+      class="bg-blue-900 px-3 py-1 rounded hover:bg-gray-700 transition"
+    >
+      Logout
+    </button>
+  </div>
+</nav>
+
+    <main class="p-6 max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold mb-6">Dashboard -</h2>
+
+      <div id="summary" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <div
+          class="bg-white shadow-md rounded-lg p-4 border-l-4 border-blue-500"
+        >
+          <h3 class="text-lg font-semibold text-gray-700">Total Expense:</h3>
+          <p id="totalExpense" class="text-2xl font-bold text-gray-900 mt-2">
+            ₹0
+          </p>
+        </div>
+        <div
+          class="bg-white shadow-md rounded-lg p-4 border-l-4 border-blue-500"
+        >
+          <h3 class="text-lg font-semibold text-gray-700">
+            This Month's Expense:
+          </h3>
+          <p id="monthlyExpense" class="text-2xl font-bold text-gray-900 mt-2">
+            ₹0
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <label
+          for="categoryFilter"
+          class="block text-lg font-bold text-gray-900 mb-2"
+          >Filter by Category:</label
+        >
+        <select
+          id="categoryFilter"
+          class="w-full sm:w-100 text-center p-2 rounded border border-gray-300 shadow focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          <option value="">-- All Categories --</option>
+        </select>
+      </div>
+
+      <button
+        id="addExpenseBtn"
+        class="w-full bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-green-700 transition"
+      >
+        Add Expense
+      </button>
+
+      <!-- Expenses list and summary will go here -->
+      <div id="expenseList" class="space-y-4 mt-6"></div>
+
+      <!-- Charts Section -->
+
+      <section class="mt-10 space-y-8">
+        <h3 class="text-xl font-semibold mb-4">Expense Visualizations:</h3>
+
+        <!-- Pie Chart -->
+        <div id="pieSection" class="bg-white p-4 rounded-lg shadow-md" style="height: 520px">
+          <h3 class="text-lg font-semibold text-gray-700 mb-2">
+            Expenses by Category (Pie Chart):
+          </h3>
+          <div id="pieChartContainer" class="flex items-center justify-center gap-10" style="height: 450px">
+            <canvas id="pieChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Bar Chart -->
+        <div id="barSection" class="bg-white rounded-lg shadow-md p-4">
+          <h4 class="text-lg font-semibold text-gray-700 mb-2">
+            Monthly Expense Overview:
+          </h4>
+          <canvas id="barChart" class="w-full h-64"></canvas>
+        </div>
+      </section>
+    </main>
+    <button
+  id="scrollTopBtn"
+  title="Go to top"
+  class="fixed bottom-6 right-6 bg-blue-700 text-white w-12 h-12 text-lg rounded-full shadow-lg hover:bg-blue-900 transition hidden z-50 flex items-center justify-center"
+>
+  ↑
+</button>
+
+    <script src="js/dashboard.js"></script>
+    <!-- Scroll to Top Button -->
+
+
+  </body>
+</html>
